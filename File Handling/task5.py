@@ -1,5 +1,5 @@
-with open("File Handling/lines.txt", "r") as file:
-    data= file.read()
+with open("File Handling/lines.txt", "r") as f:
+    data= f.read()
 print(data)
 
 char= len(data)
