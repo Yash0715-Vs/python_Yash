@@ -1,0 +1,19 @@
+Definition:
+
+Service-Oriented Architecture (SOA) is a software design approach in which applications are built using independent and reusable services.
+
+Features of SOA:
+Reusable services.
+Loose coupling between components.
+Platform independence.
+Easy integration of applications.
+Relationship with Cloud Computing:
+Cloud services are often based on SOA principles.
+SOA enables services to be delivered over the internet.
+Cloud platforms use SOA for scalability and interoperability.
+Example:
+
+Online payment, authentication, and messaging services can work independently and be combined in one application.
+
+Conclusion:
+SOA provides the architectural foundation that helps cloud computing deliver flexible and reusable services efficiently.
