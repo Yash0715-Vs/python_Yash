@@ -1,0 +1,39 @@
+{
+    "students": [
+        {
+            "name": "Yash",
+            "age": 21,
+            "course": "Python",
+            "marks": 85,
+            "address": "Ahmedabad"
+        },
+        {
+            "name": "Rahul",
+            "age": 20,
+            "course": "Java",
+            "marks": 72,
+            "address": "Mumbai"
+        },
+        {
+            "name": "Amit",
+            "age": 22,
+            "course": "Python",
+            "marks": 91,
+            "address": "Delhi"
+        },
+        {
+            "name": "Neha",
+            "age": 21,
+            "course": "Data Science",
+            "marks": 78,
+            "address": "Pune"
+        },
+        {
+            "name": "Priya",
+            "age": 20,
+            "course": "Python",
+            "marks": 95,
+            "address": "Ahmedabad"
+        }
+    ]
+}
