@@ -1,11 +1,13 @@
-def add(a,b):
-    return a+b
+class Calculator:
 
-def substraction(a,b):
-    return a-b
+    def add(self,a,b):
+        return a+b
 
-def multiply(a,b):
-    return a*b
+    def substraction(self,a,b):
+        return a-b
 
-def square(n):
-    return n*n
+    def multiply(self,a,b):
+        return a*b
+
+    def square(self,n):
+        return n*n
