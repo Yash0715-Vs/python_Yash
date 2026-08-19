@@ -1,14 +1,14 @@
-import unittest
+# import unittest
 
-def div(a,b):
-    return a/b
+# def div(a,b):
+#     return a/b
 
-class testdiv(unittest.TestCase):
-    def check_div(self):
-        with self.assertRaises(ZeroDivisionError):
-            div(10,0)
+# class testdiv(unittest.TestCase):
+#     def check_div(self):
+#         with self.assertRaises(ZeroDivisionError):
+#             div(10,0)
 
-unittest.main()
+# unittest.main() # it shows no test runs because unittest always starts with test method(test_check) not (check_div).
 
 
 import unittest
