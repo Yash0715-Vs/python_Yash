@@ -1,22 +1,27 @@
-import unittest
+# import unittest
 
 
-class TestStudent(unittest.TestCase):
+# class TestStudent(unittest.TestCase):
 
-    def setUp(self):
-        self.marks = [55, 66, 77]
+#     def setUp(self):
+#         self.marks = [55, 66, 77]
 
-    def tearDown(self):
-        self.marks = []
+#     def tearDown(self):
+#         self.marks = []
 
-    def test_length(self):
-        self.assertEqual(len(self.marks), 3)
+#     def test_length(self):
+#         self.assertEqual(len(self.marks), 3)
 
-    def test_first_marks(self):
-        self.assertEqual(self.marks[2], 77)
+#     def test_first_marks(self):
+#         self.assertEqual(self.marks[2], 77)
 
 
-unittest.main()
+# unittest.main()
     
     
 
+numbers = [5, 2, 8, 1]
+
+numbers.sort()
+print(numbers)
+# print(result)
