@@ -1,6 +1,6 @@
 import unittest #unittest 
 
-from calculator import add, substraction, multiply
+from calculator import add, substraction, multiply, square
 
 class TestCalculator(unittest.TestCase):
 
@@ -13,4 +13,6 @@ class TestCalculator(unittest.TestCase):
     def test_multiply(self):
         self.assertEqual(multiply(4,4),16)
 
+    def test_square(self):
+        self.assertEqual(square(5), 25)
 unittest.main()
