@@ -4,9 +4,9 @@ by_score = sorted(students, key=lambda s: s[1], reverse=True)
 
 print(by_score)
 
-# words = ["banana", "fig", "apple"]
+words = ["banana", "fig", "apple"]
 
-# print(sorted(words, key=len))
+print(sorted(words, key=len))
 
 # employees = [
 #     {"name": "Ravi", "salary": 45000},
