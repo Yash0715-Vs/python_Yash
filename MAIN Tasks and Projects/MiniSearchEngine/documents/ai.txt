@@ -1,0 +1,3 @@
+Artificial intelligence is growing rapidly.
+Python is commonly used for AI.
+Machine learning and Python are closely related.
