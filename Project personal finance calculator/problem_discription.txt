@@ -1,0 +1,10 @@
+START
+1. take monthly income from the user
+2. take different expenses from the user.
+3. Convert inputs into numbers.
+4. Calculate total expenses.
+5. Calculate savings.
+6. Calculate savings percentage.
+7. Check whether expenses are affordable.
+8. Display a clean financial report.
+END
