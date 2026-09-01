@@ -32,13 +32,13 @@ def save_to_json(name, income, expenses):
 
 def main():
 
-    print("=== Personal Finance Calculator ===")
+    print("Personal Finance Calculator")
 
     name = input("Enter your name: ")
 
-    income = [] # THIS IS FOR INCOMEDATA
+    income = [] # THIS IS FOR INCOME DATA
 
-    print("\n--- INCOME ---")
+    print("\nINCOME")
 
     while len(income) < 10:
 
@@ -51,16 +51,14 @@ def main():
             "amount": amount
         })
 
-        choice = input(
-            "Do you want to add another income? (y/n): "
-        ).lower()
+        choice = input("Do you want to add another income? (y/n): ").lower()
 
         if choice != "y":
             break
 
-    expenses = [] # THIS IS FOR EXPENSESDATA
+    expenses = [] # THIS IS FOR EXPENSE SDATA
 
-    print("\n--- EXPENSES ---")
+    print("\nEXPENSES ")
 
     while len(expenses) < 10:
 
@@ -73,9 +71,7 @@ def main():
             "amount": amount
         })
 
-        choice = input(
-            "Do you want to add another expense? (y/n): "
-        ).lower()
+        choice = input("Do you want to add another expense? (y/n): ").lower()
 
         if choice != "y":
             break
