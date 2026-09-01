@@ -2,362 +2,390 @@
 
 ## 1. Project Description
 
-The Personal Finance Calculator is a Python program that helps a user understand their monthly financial situation.
+The **Personal Finance Calculator** is a simple Python program that helps users track their income and expenses.
 
-The program accepts the user's name, monthly income, and different monthly expenses. It then calculates total expenses, savings, savings percentage, and determines whether the expenses are affordable.
+The program allows the user to:
 
-This project demonstrates Python fundamentals including variables, data types, input/output, operators, type conversion, exception handling, functions, and formatted output.
+* Enter their name.
+* Add multiple income sources.
+* Add multiple expenses.
+* Enter a category for each income and expense.
+* Calculate total income.
+* Calculate total expenses.
+* Calculate savings.
+* Calculate the percentage of income saved.
+* Check whether the expenses are affordable based on the total income.
+
+The program allows a maximum of **10 income entries** and **10 expense entries**.
 
 ---
 
 ## 2. Features
 
-The program provides the following features:
+### Income Management
 
-* Accepts user input.
-* Converts numeric input into `float`.
-* Validates numeric input.
-* Prevents negative income and expenses.
-* Calculates total expenses.
-* Calculates total savings.
-* Calculates savings percentage.
-* Determines affordability.
-* Displays a formatted financial report.
-* Demonstrates Python data types.
-* Demonstrates different Python operators.
+The user can enter:
 
----
+* Income category
+* Income amount
 
-## 3. Python Concepts Used
-
-### Data Types
-
-The program demonstrates:
-
-* `int`
-* `float`
-* `str`
-* `bool`
-* `complex`
-
-### Operators
-
-The program demonstrates:
-
-* Arithmetic operators
-* Comparison operators
-* Logical operators
-* Assignment operators
-* Identity operators
-* Membership operators
-* Bitwise operators
-
----
-
-## 4. Program Flow
-
-The program follows these steps:
-
-1. Demonstrate the required Python data types.
-2. Demonstrate the required operators.
-3. Ask the user for their name.
-4. Ask for monthly income.
-5. Ask for different monthly expenses.
-6. Validate all numeric inputs.
-7. Calculate total expenses.
-8. Calculate savings.
-9. Calculate savings percentage.
-10. Check affordability.
-11. Display the final financial report.
-
----
-
-## 5. Calculations
-
-### Total Expenses
+The user can choose whether to add another income using:
 
 ```text
-Total Expenses =
-Rent + Food + Transport + Utilities + Entertainment
+(y/n)
 ```
 
-### Savings
+Example:
 
 ```text
-Savings =
-Monthly Income - Total Expenses
-```
+Enter income category: Salary
+Enter income amount: 50000
+Do you want to add another income? (y/n): y
 
-### Savings Percentage
-
-```text
-Savings Percentage =
-(Savings / Monthly Income) × 100
-```
-
-If monthly income is zero, the savings percentage is set to zero to avoid division by zero.
-
-### Affordability
-
-```text
-If Total Expenses <= Monthly Income
-    Affordable
-Else
-    Not Affordable
+Enter income category: Freelancing
+Enter income amount: 10000
+Do you want to add another income? (y/n): n
 ```
 
 ---
 
-## 6. Input Validation
+### Expense Management
 
-The program handles invalid numeric input using `try` and `except`.
+The user can enter:
 
-For example, if the user enters:
+* Expense category
+* Expense amount
+
+The user can also choose whether to add another expense.
+
+Example:
 
 ```text
-Enter your monthly income: abc
+Enter expense category: Rent
+Enter expense amount: 15000
+Do you want to add another expense? (y/n): y
+
+Enter expense category: Food
+Enter expense amount: 5000
+Do you want to add another expense? (y/n): n
 ```
 
-The program displays:
+---
+
+## 3. Technologies Used
+
+* **Python 3**
+* Python built-in functions
+* Lists
+* Dictionaries
+* Loops
+* Conditional statements
+* Functions
+* Exception handling
+* Formatted strings
+
+No external libraries are required.
+
+---
+
+## 4. Program Structure
+
+The program contains two main functions:
+
+### `get_amount()`
+
+This function gets a valid positive number from the user.
+
+It uses:
+
+```python
+try:
+    value = float(input(message))
+```
+
+If the user enters invalid text, the program displays:
 
 ```text
 Invalid input. Please enter a number.
 ```
 
-The program then asks the user to enter the value again.
+It also prevents zero and negative values:
 
-The program also prevents negative values.
+```python
+if value <= 0:
+    print("Please enter a positive number.")
+```
+
+---
+
+### `main()`
+
+The `main()` function controls the complete program.
+
+It:
+
+1. Gets the user's name.
+2. Collects income information.
+3. Collects expense information.
+4. Calculates total income.
+5. Calculates total expenses.
+6. Calculates savings.
+7. Calculates percentage saved.
+8. Checks affordability.
+9. Displays the final report.
+
+---
+
+## 5. Data Storage
+
+Income and expenses are stored using lists containing dictionaries.
+
+### Income
 
 Example:
 
-```text
-Enter your monthly income: -5000
-Please enter a non-negative number.
+```python
+income = [
+    {
+        "category": "Salary",
+        "amount": 50000
+    },
+    {
+        "category": "Freelancing",
+        "amount": 10000
+    }
+]
 ```
 
-The user is asked to enter the value again.
+### Expenses
+
+Example:
+
+```python
+expenses = [
+    {
+        "category": "Rent",
+        "amount": 15000
+    },
+    {
+        "category": "Food",
+        "amount": 5000
+    }
+]
+```
+
+Using a dictionary allows both the **category** and **amount** to be stored together.
 
 ---
 
-## 7. Sample Input
+## 6. Calculations
 
-```text
-Enter your name: Yash
-Enter your monthly income: ₹50000
+### Total Income
 
-Enter your monthly expenses:
-Rent: ₹15000
-Food: ₹5000
-Transport: ₹3000
-Utilities: ₹2000
-Entertainment: ₹2000
-```
+The program loops through all income entries and adds their amounts.
 
-## 8. Sample Output
+```python
+total_income = 0
 
-```text
-==================================================
-             PERSONAL FINANCE REPORT
-==================================================
-
-Name           : Yash
-Monthly Income : ₹50,000.00
-
-EXPENSES
---------------------------------------------------
-Rent              : ₹15,000.00
-Food              : ₹5,000.00
-Transport         : ₹3,000.00
-Utilities         : ₹2,000.00
-Entertainment     : ₹2,000.00
---------------------------------------------------
-Total Expenses     : ₹27,000.00
-
-FINANCIAL SUMMARY
---------------------------------------------------
-Savings            : ₹23,000.00
-Savings Percentage : 46.00%
-Affordability      : Affordable
-==================================================
+for item in income:
+    total_income += item["amount"]
 ```
 
 ---
 
-## 9. Error and Edge-Case Testing
+### Total Expenses
 
-### Test Case 1 — Valid Input
+The program loops through all expense entries and adds their amounts.
 
-Input:
+```python
+total_expenses = 0
 
-```text
-Income = 50000
-Expenses = 27000
-```
-
-Expected result:
-
-```text
-Savings = ₹23000
-Savings Percentage = 46%
-Affordability = Affordable
+for item in expenses:
+    total_expenses += item["amount"]
 ```
 
 ---
 
-### Test Case 2 — Invalid Text Input
+### Savings
 
-Input:
+Savings are calculated using:
+
+```text
+Savings = Total Income - Total Expenses
+```
+
+Python:
+
+```python
+savings = total_income - total_expenses
+```
+
+---
+
+### Percentage Saved
+
+The percentage of income saved is calculated using:
+
+```text
+Percentage Saved =
+(Savings / Total Income) × 100
+```
+
+Python:
+
+```python
+percent_saved = savings / total_income * 100
+```
+
+If the total income is zero, the program sets the percentage saved to zero to avoid division by zero.
+
+---
+
+### Affordability
+
+The program checks whether total expenses are less than or equal to total income.
+
+```python
+if total_expenses <= total_income:
+    print("Affordable: Yes")
+else:
+    print("Affordable: No")
+```
+
+If:
+
+```text
+Total Expenses <= Total Income
+```
+
+the result is:
+
+```text
+Affordable: Yes
+```
+
+Otherwise:
+
+```text
+Affordable: No
+```
+
+---
+
+## 7. Input Validation
+
+The program validates the amount entered by the user.
+
+### Invalid Number
+
+If the user enters:
 
 ```text
 abc
 ```
 
-Expected result:
+the program displays:
 
 ```text
 Invalid input. Please enter a number.
 ```
 
-The program does not crash.
-
 ---
 
-### Test Case 3 — Negative Input
+### Zero or Negative Number
 
-Input:
+If the user enters:
 
 ```text
 -5000
 ```
 
-Expected result:
+or:
 
 ```text
-Please enter a non-negative number.
+0
 ```
 
-The program asks for the value again.
+the program displays:
+
+```text
+Please enter a positive number.
+```
+
+The user is then asked to enter the amount again.
 
 ---
 
-### Test Case 4 — Expenses Greater Than Income
-
-Input:
+## 8. Sample Input
 
 ```text
-Income = 20000
-Expenses = 25000
-```
+=== Personal Finance Calculator ===
+Enter your name: Yash
 
-Expected result:
+--- INCOME ---
+Enter income category: Salary
+Enter income amount: 50000
+Do you want to add another income? (y/n): y
 
-```text
-Savings = -₹5000
-Affordability = Not Affordable
+Enter income category: Freelancing
+Enter income amount: 10000
+Do you want to add another income? (y/n): n
+
+--- EXPENSES ---
+Enter expense category: Rent
+Enter expense amount: 15000
+Do you want to add another expense? (y/n): y
+
+Enter expense category: Food
+Enter expense amount: 5000
+Do you want to add another expense? (y/n): y
+
+Enter expense category: Transport
+Enter expense amount: 3000
+Do you want to add another expense? (y/n): n
 ```
 
 ---
 
-### Test Case 5 — Zero Income
-
-Input:
+## 9. Sample Output
 
 ```text
-Income = 0
-```
+==================================================
+             PERSONAL FINANCE REPORT
+==================================================
+Name: Yash
 
-The program avoids division by zero and sets:
+Income:
+Salary : ₹ 50000.0
+Freelancing : ₹ 10000.0
 
-```text
-Savings Percentage = 0%
+Expenses:
+Rent : ₹ 15000.0
+Food : ₹ 5000.0
+Transport : ₹ 3000.0
+
+==================================================
+Total Income: ₹60000.0
+Total Expenses: ₹23000.0
+Savings: ₹37000.0
+Percent Saved: 61.67%
+Affordable: Yes
 ```
 
 ---
 
-## 10. Design Decisions
+## 10. Test Cases
 
-### Functions
+| Test Case                 | Input                            | Expected Result               |
+| ------------------------- | -------------------------------- | ----------------------------- |
+| Valid income and expenses | Income = 60000, Expenses = 23000 | Savings = 37000               |
+| Multiple incomes          | 50000 + 10000                    | Total Income = 60000          |
+| Multiple expenses         | 15000 + 5000 + 3000              | Total Expenses = 23000        |
+| Invalid amount            | `abc`                            | Shows invalid input message   |
+| Negative amount           | `-5000`                          | Shows positive number message |
+| Zero amount               | `0`                              | Shows positive number message |
+| Expenses below income     | Income > Expenses                | Affordable: Yes               |
+| Expenses above income     | Income < Expenses                | Affordable: No                |
+| Maximum entries           | 10 incomes/expenses              | Program accepts entries       |
+| Zero total income         | Income = 0                       | Percentage Saved = 0          |
 
-The program is divided into separate functions:
-
-* `get_positive_number()` handles input validation.
-* `demonstrate_data_types()` demonstrates required data types.
-* `demonstrate_operators()` demonstrates required operators.
-* `calculate_finance()` handles financial calculations.
-* `display_report()` handles formatted output.
-* `main()` controls the overall program flow.
-
-This keeps each function focused on one responsibility.
-
-### Dictionary for Expenses
-
-A dictionary is used to store expense categories and their amounts:
-
-```python
-expenses = {
-    "Rent": 15000,
-    "Food": 5000,
-    "Transport": 3000,
-    "Utilities": 2000,
-    "Entertainment": 2000
-}
-```
-
-This makes the expenses easy to manage and allows the total to be calculated using:
-
-```python
-sum(expenses.values())
-```
-
-### Exception Handling
-
-`try` and `except ValueError` are used to prevent invalid numeric input from crashing the program.
-
-### Formatted Output
-
-f-strings are used to make the final report readable and to format money values with commas and two decimal places.
-
----
-
-## 11. Code Quality
-
-The final program follows the assignment's coding standards by:
-
-* Using meaningful variable names.
-* Using focused functions.
-* Avoiding unnecessary duplication.
-* Validating user input.
-* Handling expected errors.
-* Using comments/docstrings where useful.
-* Keeping formatting consistent.
-* Separating calculations from presentation.
-
----
-
-## 12. How to Run
-
-Make sure Python is installed on the computer.
-
-Save the program as:
-
-```text
-main.py
-```
-
-Open a terminal in the project folder and run:
-
-```bash
-python main.py
-```
-
-The program will start and ask for the user's information.
-
----
-
-## 13. Conclusion
-
-This project demonstrates how a real-world problem can be broken down into smaller programming tasks.
-
-The Personal Finance Calculator uses Python fundamentals to collect information, process data, perform calculations, validate input, and present the results in a clear format.
-
-The project covers the required concepts from the Python Problem-Solving Foundations assignment.
