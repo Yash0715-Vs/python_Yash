@@ -1,19 +1,33 @@
+import json
 
 def get_amount(message):
 
-   while True:
-           try:
-               value = float(input(message))
-   
-               if value <= 0:
-                   print("Please enter a positive number.")
-                   continue
-   
-               return value
-   
-           except ValueError:
-               print("Invalid input. Please enter a number.")
-   
+    while True:
+        try:
+            value = float(input(message))
+
+            if value <= 0:
+                print("Please enter a positive number.")
+                continue
+
+            return value
+
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+def save_to_json(name, income, expenses):
+
+    data = {
+        "name": name,
+        "income": income,
+        "expenses": expenses
+    }
+
+    with open("finance_data.json", "w") as file:
+        json.dump(data, file, indent=4)
+
+    print("\nData saved successfully to finance_data.json")
 
 
 def main():
@@ -22,9 +36,7 @@ def main():
 
     name = input("Enter your name: ")
 
-    # ---------------- INCOME ----------------
-
-    income = []
+    income = [] # THIS IS FOR INCOMEDATA
 
     print("\n--- INCOME ---")
 
@@ -39,14 +51,14 @@ def main():
             "amount": amount
         })
 
-        choice = input("Do you want to add another income? (y/n): ").lower()
+        choice = input(
+            "Do you want to add another income? (y/n): "
+        ).lower()
 
         if choice != "y":
             break
 
-    # ---------------- EXPENSES ----------------
-
-    expenses = []
+    expenses = [] # THIS IS FOR EXPENSESDATA
 
     print("\n--- EXPENSES ---")
 
@@ -61,13 +73,14 @@ def main():
             "amount": amount
         })
 
-        choice = input("Do you want to add another expense? (y/n): ").lower()
+        choice = input(
+            "Do you want to add another expense? (y/n): "
+        ).lower()
 
         if choice != "y":
             break
 
-    # ---------------- CALCULATIONS ----------------
-
+# FOR CALCULATIONS
     total_income = 0
 
     for item in income:
@@ -85,8 +98,10 @@ def main():
     else:
         percent_saved = 0
 
-    # ---------------- REPORT ----------------
+    save_to_json(name, income, expenses)
 
+
+#PRINTING THE REPORT
     print("\n" + "=" * 50)
     print("             PERSONAL FINANCE REPORT")
     print("=" * 50)
@@ -96,12 +111,12 @@ def main():
     print("\nIncome:")
 
     for item in income:
-        print(item["category"],": ₹", item["amount"])
+        print(item["category"], ": ₹", item["amount"])
 
     print("\nExpenses:")
 
     for item in expenses:
-        print(item["category"],": ₹", item["amount"])
+        print(item["category"], ": ₹", item["amount"])
 
     print("\n" + "=" * 50)
 
@@ -117,5 +132,4 @@ def main():
 
 
 main()
-
 

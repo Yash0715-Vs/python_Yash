@@ -1,0 +1,27 @@
+{
+    "name": "YASH SUTHAR",
+    "income": [
+        {
+            "category": "SALARY",
+            "amount": 15000.0
+        },
+        {
+            "category": "BUSINESS",
+            "amount": 50000.0
+        }
+    ],
+    "expenses": [
+        {
+            "category": "FOOD",
+            "amount": 500.0
+        },
+        {
+            "category": "SHOPPING",
+            "amount": 12000.0
+        },
+        {
+            "category": "TRANSPORTATION",
+            "amount": 250.0
+        }
+    ]
+}
