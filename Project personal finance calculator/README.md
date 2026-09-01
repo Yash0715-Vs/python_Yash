@@ -15,7 +15,7 @@ A simple Python program that helps users track their income and expenses and cal
 * Calculate percentage saved.
 * Check affordability.
 * Validate numeric input.
-* Save entered data in a JSON file.
+* Save entered data in a JSON file.(THIS IS AN EXTRA FEATURE WHICH I HAVE ADD BY MY SELF)
 
 ## 3. Technologies
 
@@ -122,7 +122,7 @@ Save the files as:
 ```text
 Personal_Finance_Calculator/
 │
-├── main.py
+├── main1.py
 ├── finance_data.json
 └── README.md
 ```
@@ -130,7 +130,7 @@ Personal_Finance_Calculator/
 Run the program using:
 
 ```bash
-python main.py
+python main1.py
 ```
 
 `finance_data.json` will be created automatically after entering the data.
