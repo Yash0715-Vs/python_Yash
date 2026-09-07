@@ -3,6 +3,7 @@ class StudentInfo:
     def __init__(self, student_name, student_rollno):
         self.name = student_name
         self.rollno = student_rollno
+print(StudentInfo.__doc__)
 
 class StudentMarks:
     """this class is used to store the student marks in three subjects"""
@@ -13,6 +14,7 @@ class StudentMarks:
         self.marks2 = marks2
         self.marks3 = marks3
 
+print(StudentMarks.__doc__)
 
 class main:
     def calculate_grade(self, marks1, marks2, marks3):
