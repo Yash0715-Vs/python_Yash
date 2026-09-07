@@ -14,7 +14,7 @@ for i in range(n):
 
 print("\nStudent Information")
 print("1. Display all students")
-print("2. Search student name")
+print("2. Display student name")
 print("3. Display marks")
 choice = int(input("Enter your choice: "))
 if choice ==1:
@@ -31,3 +31,35 @@ elif choice ==3:
 
 else:
     print("Invalid choice")
+
+
+    #for continuing the program i use while loop
+
+# while True:
+
+#     print("\n1. Display Roll No")
+#     print("2. Display Names")
+#     print("3. Display Marks")
+#     print("4. Exit")
+
+#     choice = int(input("Enter your choice: "))
+
+#     if choice == 1:
+#         for roll_no in students:
+#             print(roll_no)
+
+#     elif choice == 2:
+#         for data in students.values():
+#             print(data["name"])
+
+#     elif choice == 3:
+#         for data in students.values():
+#             print(data["marks"])
+
+#     elif choice == 4:
+#         print("Program Ended")
+#         break
+
+#     else:
+#         print("Invalid Choice")
+#         continue
