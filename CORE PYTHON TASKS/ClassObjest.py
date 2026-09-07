@@ -55,14 +55,14 @@ class main:
             )
 
             print("\nStudent Result")
-            print("Roll No:", student1.rollno)
-            print("Name:", student1.name)
+            print(f"Roll No: {student1.rollno}")
+            print(f"Name: {student1.name}")
 
             if grade == "Invalid Marks":
-                print("Result:", grade)
+                print(f"Result: {grade}")
             else:
-                print("Average:", average)
-                print("Grade:", grade)
+                print(f"Average: {average}")
+                print(f"Grade: {grade}")
 
 
 obj = main()
