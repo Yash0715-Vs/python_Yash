@@ -7,5 +7,6 @@ try:
     else:
         print("Invalid credentials")
 
-except Exception as e:
+except Exception as e: #e is a variable that will store the error message
     print("Something went wrong:", e)
+
