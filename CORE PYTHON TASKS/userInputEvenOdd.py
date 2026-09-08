@@ -3,7 +3,7 @@ if n>0:
 
     if n%2!=0:
         result= n +10
-        print("positive odd number")
+        print("positive odd number") 
         print(f"result is: {result}")
     else:
         result = n*2.5
