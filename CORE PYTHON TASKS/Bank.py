@@ -2,12 +2,15 @@ class MaxLimitExceeded(Exception):
     pass
 
 
-class HDFC:
+class HDFC: 
     def __init__(self):
         self.transaction_limit = 3
         self.amount_limit = 20000
 
     def withdraw(self, amount):
+        """
+        Withdraws the specified amount from the HDFC account."""
+
         if amount > self.amount_limit:
             raise MaxLimitExceeded("Max Amount exceeds the limit")
 
@@ -28,6 +31,9 @@ class AXIS:
         self.amount_limit = 50000
 
     def withdraw(self, amount):
+        """
+        Withdraws the specified amount from the AXIS account."""
+
         if amount > self.amount_limit:
             raise MaxLimitExceeded("Max Amount exceeds the limit")
 
@@ -44,6 +50,7 @@ class AXIS:
 
 class ATM:
     def inputamount(self):
+        """ Prompts the user to select a bank and enter an amount to withdraw. """
 
         choice = (input("enter your choice: "))
 
@@ -63,7 +70,7 @@ class ATM:
                 next_transaction = input(
                     "Do you want next transaction? (yes/no): "
                 )
-                
+
                 if next_transaction != "yes" and next_transaction != "no":
                     print("Invalid input. Please enter 'yes' or 'no'.")
                     continue
