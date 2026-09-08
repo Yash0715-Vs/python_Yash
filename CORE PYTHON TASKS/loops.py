@@ -6,5 +6,5 @@ elif x == 'b':
 elif x == 'c':
     print("you have entered c")
 
-else:
+else: 
     print("invalid character")
