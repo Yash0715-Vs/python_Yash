@@ -7,3 +7,4 @@ while i <= n:
     factorial *= i
     i += 1
 print(f"The factorial is: {factorial}")
+#the name is yash
