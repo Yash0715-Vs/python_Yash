@@ -18,6 +18,7 @@ print(StudentMarks.__doc__)
 
 class main:
     def calculate_grade(self, marks1, marks2, marks3):
+        """Calculates the average and grade based on the provided marks."""
         if marks1 > 100 or marks2 > 100 or marks3 > 100:
             return None, "Invalid Marks"
 
