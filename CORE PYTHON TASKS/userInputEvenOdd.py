@@ -1,4 +1,4 @@
-n = int(input("enter the number: "))#user input for number
+n = int(input("enter the number: "))
 if n>0:
 
     if n%2!=0:
