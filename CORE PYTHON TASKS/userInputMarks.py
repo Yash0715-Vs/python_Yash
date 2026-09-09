@@ -13,3 +13,4 @@ elif n>100:
     print("Invalid marks")
 else:
     print("error")
+    
