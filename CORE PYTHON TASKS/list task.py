@@ -15,3 +15,4 @@ for i in a:
 print(int_List)
 print(max(int_List))
 print(min(int_List))
+#the name is yash
