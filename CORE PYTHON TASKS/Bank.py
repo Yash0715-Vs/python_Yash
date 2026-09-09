@@ -87,3 +87,5 @@ class ATM:
 
 atm = ATM()
 atm.inputamount()
+
+# the name is yash
