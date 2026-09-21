@@ -3,7 +3,7 @@ class StudentInfo:
     def __init__(self, student_name, student_rollno):
         self.name = student_name
         self.rollno = student_rollno
-print(StudentInfo.__doc__)
+print(StudentInfo.__doc__) #use to print the docstring of the class
 
 class StudentMarks:
     """this class is used to store the student marks in three subjects"""
