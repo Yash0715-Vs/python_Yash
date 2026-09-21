@@ -1,4 +1,4 @@
-#dict of students
+
 student={
 's1':{
     'rollno':41,
