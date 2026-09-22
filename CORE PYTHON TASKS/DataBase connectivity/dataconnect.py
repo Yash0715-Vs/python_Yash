@@ -8,7 +8,7 @@ connection = pymysql.connect(
 )
 
 cursor = connection.cursor()
-cursor.execute("SELECT * FROM student")
+cursor.execute("SELECT * FROM bank")
 data = cursor.fetchall()
 print(data)
 print("Data fetched successfully")
