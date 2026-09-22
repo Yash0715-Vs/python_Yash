@@ -6,3 +6,7 @@ connection = pymysql.connect(
     password='root',
     db = "employee"
 )
+cursor = connection.cursor()
+cursor.execute("SELECT name FROM employee")
+data = cursor.fetchall()
+print(data)
