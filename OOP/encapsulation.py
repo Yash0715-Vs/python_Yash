@@ -13,13 +13,16 @@ class Student:
 
 
 # Create an instance with an initial value
-student = Student(0)
+student = Student(85)
+
+# Manual access to the private attribute using name mangling
+print("Manual marks access:", student._Student__marks)
 
 # Take input
 marks = int(input("Enter marks: "))
 
-# Use setter
+# Use setter to update the private attribute safely
 student.set_marks(marks)
 
-# Use getter
+# Use getter to read the value
 print("Marks:", student.get_marks())
