@@ -18,7 +18,7 @@ def insertLogin():
     )
     cursor1.execute(
         "insert into userlogin(id, first_name, last_name, username, pass, course) values (%s, %s, %s, %s, %s, %s)",
-        (157, 'baku', 'Suthar', 'baku1234', 22277, 'CSE')
+        (157, 'baku', 'DFG', 'baku1234', 22277, 'CSE')
     )
     cursor1.execute(
         "insert into userlogin(id, first_name, last_name, username, pass, course) values (%s, %s, %s, %s, %s, %s)",
