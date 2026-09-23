@@ -1,49 +1,45 @@
 import pymysql
 
 
+# Connect Python with MySQL
 def get_connection():
-    try:
-        connection = pymysql.connect(
-            host='localhost',
-            port=3306,
-            user='root',
-            password='root',
-            database='employee_login'
-        )
-        return connection
-    except pymysql.MySQLError as e:
-        print(f"Database connection failed: {e}")
-        return None
-    except Exception as e:
-        print(f"Unexpected database error: {e}")
-        return None
+
+    connection = pymysql.connect(
+        host="localhost",
+        port=3306,
+        user="root",
+        password="root",
+        database="employee_login"
+    )
+
+    return connection
 
 
 # ---------------- REGISTER ----------------
 
 def register():
-    try:
-        id = int(input("Enter the ID: "))
-        first_name = input("Enter First Name: ")
-        last_name = input("Enter Last Name: ")
-        username = input("Enter Username: ")
-        password = input("Enter Password: ")
-        course = input("Enter Course: ")
-    except EOFError:
-        print("\nInput cancelled. Exiting register.")
-        return
+
+    print("\n===== REGISTER =====")
+
+    id = int(input("Enter ID: "))
+    first_name = input("Enter First Name: ")
+    last_name = input("Enter Last Name: ")
+    username = input("Enter Username: ")
+    password = input("Enter Password: ")
+    course = input("Enter Course: ")
 
     # Check empty fields
     if first_name == "" or last_name == "" or username == "" or password == "" or course == "":
         print("All fields are required.")
         return
 
+    # Connect to database
     connection = get_connection()
-    if connection is None:
-        return
+
+    # Create cursor
     cursor = connection.cursor()
 
-    # Check username already exists
+    # Check username
     query = """
     SELECT * FROM employee_login
     WHERE username = %s
@@ -51,14 +47,14 @@ def register():
 
     cursor.execute(query, (username,))
 
-    existing_user = cursor.fetchone()
+    user = cursor.fetchone()
 
-    if existing_user:
+    if user:
         print("Username already exists.")
         connection.close()
         return
 
-    # Insert new user
+    # Insert user
     query = """
     INSERT INTO employee_login
     (id, first_name, last_name, username, password, course)
@@ -74,15 +70,14 @@ def register():
         course
     )
 
-    try:
-        cursor.execute(query, values)
-        connection.commit()
-        print("Registration successful!")
-    except pymysql.MySQLError as e:
-        print(f"Registration failed: {e}")
-        connection.rollback()
-    finally:
-        connection.close()
+    cursor.execute(query, values)
+
+    # Save data
+    connection.commit()
+
+    print("Registration successful!")
+
+    connection.close()
 
 
 # ---------------- LOGIN ----------------
@@ -91,32 +86,26 @@ def login():
 
     print("\n===== LOGIN =====")
 
-    try:
-        username = input("Enter Username: ")
-        password = input("Enter Password: ")
-    except EOFError:
-        print("\nInput cancelled. Exiting login.")
-        return
+    username = input("Enter Username: ")
+    password = input("Enter Password: ")
 
+    # Connect to database
     connection = get_connection()
-    if connection is None:
-        return
+
+    # Create cursor
     cursor = connection.cursor()
 
-    # Check username
+    # Find username
     query = """
     SELECT * FROM employee_login
     WHERE username = %s
     """
 
-    try:
-        cursor.execute(query, (username,))
-        user = cursor.fetchone()
-    except pymysql.MySQLError as e:
-        print(f"Login failed: {e}")
-        connection.close()
-        return
+    cursor.execute(query, (username,))
 
+    user = cursor.fetchone()
+
+    # Username not found
     if user is None:
         print("Wrong username.")
         connection.close()
@@ -128,6 +117,7 @@ def login():
         connection.close()
         return
 
+    # Login successful
     print("\nLogin successful!")
     print("Welcome,", user[1], user[2])
     print("Course:", user[5])
@@ -139,15 +129,16 @@ def login():
 
 print("===== EMPLOYEE SYSTEM =====")
 
-try:
-    choice = input("Enter 1 for Register or 2 for Login: ")
-except EOFError:
-    print("\nNo input received. Exiting program.")
-    raise SystemExit
+choice = input("Enter 1 for Register or 2 for Login: ")
 
 if choice == "1":
+
     register()
+
 elif choice == "2":
+
     login()
+
 else:
+
     print("Invalid choice.")
