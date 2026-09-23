@@ -7,7 +7,7 @@ connection = pymysql.connect(
     db = "bank"
 )
 
-cursor = connection.cursor()
+cursor = connection.cursor() 
 cursor.execute("SELECT * FROM bank")
 data = cursor.fetchall()
 print(data)
