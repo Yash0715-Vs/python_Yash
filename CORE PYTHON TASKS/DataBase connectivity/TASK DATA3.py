@@ -2,29 +2,45 @@ import pymysql
 
 
 def get_connection():
-    connection = pymysql.connect(
+    try:
+        connection = pymysql.connect(
             host='localhost',
             port=3306,
             user='root',
             password='root',
-            db='employee_login'
-    )
+            database='employee_login'
+        )
+        return connection
+    except pymysql.MySQLError as e:
+        print(f"Database connection failed: {e}")
+        return None
+    except Exception as e:
+        print(f"Unexpected database error: {e}")
+        return None
 
-#register
+
+# ---------------- REGISTER ----------------
+
 def register():
-    id = int(input("enter the id: "))
-    first_name = input("Enter First Name: ")
-    last_name = input("Enter Last Name: ")
-    username = input("Enter Username: ")
-    password = input("Enter Password: ")
-    course = input("Enter Course: ")
+    try:
+        id = int(input("Enter the ID: "))
+        first_name = input("Enter First Name: ")
+        last_name = input("Enter Last Name: ")
+        username = input("Enter Username: ")
+        password = input("Enter Password: ")
+        course = input("Enter Course: ")
+    except EOFError:
+        print("\nInput cancelled. Exiting register.")
+        return
 
     # Check empty fields
-    if id == "" or first_name == "" or last_name == "" or username == "" or password == "" or course == "":
+    if first_name == "" or last_name == "" or username == "" or password == "" or course == "":
         print("All fields are required.")
         return
 
     connection = get_connection()
+    if connection is None:
+        return
     cursor = connection.cursor()
 
     # Check username already exists
@@ -58,13 +74,15 @@ def register():
         course
     )
 
-    cursor.execute(query, values)
-
-    connection.commit()
-
-    print("Registration successful!")
-
-    connection.close()
+    try:
+        cursor.execute(query, values)
+        connection.commit()
+        print("Registration successful!")
+    except pymysql.MySQLError as e:
+        print(f"Registration failed: {e}")
+        connection.rollback()
+    finally:
+        connection.close()
 
 
 # ---------------- LOGIN ----------------
@@ -73,10 +91,16 @@ def login():
 
     print("\n===== LOGIN =====")
 
-    username = input("Enter Username: ")
-    password = input("Enter Password: ")
+    try:
+        username = input("Enter Username: ")
+        password = input("Enter Password: ")
+    except EOFError:
+        print("\nInput cancelled. Exiting login.")
+        return
 
     connection = get_connection()
+    if connection is None:
+        return
     cursor = connection.cursor()
 
     # Check username
@@ -85,9 +109,13 @@ def login():
     WHERE username = %s
     """
 
-    cursor.execute(query, (username,))
-
-    user = cursor.fetchone()
+    try:
+        cursor.execute(query, (username,))
+        user = cursor.fetchone()
+    except pymysql.MySQLError as e:
+        print(f"Login failed: {e}")
+        connection.close()
+        return
 
     if user is None:
         print("Wrong username.")
@@ -109,18 +137,17 @@ def login():
 
 # ---------------- MAIN PROGRAM ----------------
 
-print("===== STUDENT SYSTEM =====")
+print("===== EMPLOYEE SYSTEM =====")
 
-choice = input("Enter 1 for Register or 2 for Login: ")
+try:
+    choice = input("Enter 1 for Register or 2 for Login: ")
+except EOFError:
+    print("\nNo input received. Exiting program.")
+    raise SystemExit
 
 if choice == "1":
-
     register()
-
 elif choice == "2":
-
     login()
-
 else:
-
     print("Invalid choice.")
