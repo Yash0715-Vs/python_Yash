@@ -44,12 +44,13 @@ def register():
 
     # Insert new user
     query = """
-    INSERT INTO studentlogin
-    (first_name, last_name, username, password, course)
-    VALUES (%s, %s, %s, %s, %s)
+    INSERT INTO employee_login
+    (id, first_name, last_name, username, password, course)
+    VALUES (%s, %s, %s, %s, %s, %s)
     """
 
     values = (
+        id,
         first_name,
         last_name,
         username,
@@ -80,7 +81,7 @@ def login():
 
     # Check username
     query = """
-    SELECT * FROM studentlogin
+    SELECT * FROM employee_login
     WHERE username = %s
     """
 
