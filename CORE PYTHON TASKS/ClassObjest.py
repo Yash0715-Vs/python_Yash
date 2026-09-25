@@ -40,23 +40,22 @@ class main:
 
     def start(self):
         n = int(input("Enter the number of students: "))
+
         for i in range(n):
+
             print("\nenter the student information for student", i + 1)
+
             name = input("Enter the student name: ")
             rollno = input("Enter the student roll number: ")
             student1 = StudentInfo(name, rollno)
-
+            
             marks1 = float(input("Enter Marks of Subject 1: "))
             marks2 = float(input("Enter Marks of Subject 2: "))
             marks3 = float(input("Enter Marks of Subject 3: "))
-
             student2 = StudentMarks(rollno, marks1, marks2, marks3)
 
-            average, grade = self.calculate_grade(
-                student2.marks1,
-                student2.marks2,
-                student2.marks3
-            )
+            average, grade = self.calculate_grade(student2.marks1,student2.marks2,student2.marks3)
+            
 
             print("\nStudent Result")
             print(f"Roll No: {student1.rollno}")
