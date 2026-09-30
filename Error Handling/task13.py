@@ -8,3 +8,6 @@ except ZeroDivisionError:
 
 else:
     print(f"result: {result}")
+
+finally:
+    print("program finish")
