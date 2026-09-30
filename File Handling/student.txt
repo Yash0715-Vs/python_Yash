@@ -1,5 +1,5 @@
-Yash
-Rahul
-Amit
-Neha
-Neha
+Yash,85
+Rahul,92
+Amit,78
+Neha,88
+priya,35
