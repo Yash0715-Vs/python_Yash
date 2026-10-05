@@ -35,11 +35,11 @@ word_count = len(words)
 # 8. Count characters WITH spaces
 characters_with_spaces = len(data)
 
-# 9. Count characters WITHOUT spaces
+
 characters_without_spaces = len(data.replace(" ", "").replace("\n", ""))
 
 
-# 10. Display result
+
 print("\n----- File Information -----")
 print("Number of lines:", line_count)
 print("Number of words:", word_count)
