@@ -1,39 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <title>Login</title>
+
 </head>
+
 <body>
 
     <h1>Login</h1>
 
+    <!-- Display flash messages -->
+
     {% with messages = get_flashed_messages() %}
+
         {% if messages %}
+
             {% for message in messages %}
+
                 <p>{{ message }}</p>
+
             {% endfor %}
+
         {% endif %}
+
     {% endwith %}
+
 
     <form action="/login" method="POST">
 
         <label>Username:</label>
-        <input type="text" name="username" required>
+
+        <input
+            type="text"
+            name="username"
+            required
+        >
 
         <br><br>
+
 
         <label>Password:</label>
-        <input type="password" name="password" required>
+
+        <input
+            type="password"
+            name="password"
+            required
+        >
 
         <br><br>
 
-        <input type="submit" value="Login">
+
+        <input
+            type="submit"
+            value="Login"
+        >
 
     </form>
 
+
     <br>
 
-    <a href="/register">Create a new account</a>
+
+    <a href="/register">
+        Create a new account
+    </a>
+
 
 </body>
+
 </html>
