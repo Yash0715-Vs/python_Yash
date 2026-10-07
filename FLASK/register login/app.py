@@ -178,3 +178,4 @@ if __name__ == "__main__":
 
     app.run(debug=True)
 
+# the code below is for the student management system
