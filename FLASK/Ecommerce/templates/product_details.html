@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Product Details</title>
+
+</head>
+
+
+<body>
+
+    <h1>Product Details</h1>
+
+
+    <!-- FLASH MESSAGE -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <p>
+                    ✅ {{ message }}
+                </p>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    {% if product %}
+
+        <h2>
+            {{ product.name }}
+        </h2>
+
+        <p>
+            Description:
+            {{ product.description }}
+        </p>
+
+        <p>
+            Price:
+            ₹{{ product.price }}
+        </p>
+
+        <p>
+            Category:
+            {{ product.category }}
+        </p>
+
+        <p>
+            Available Stock:
+            {{ product.stock }}
+        </p>
+
+
+        {% if product.stock > 0 %}
+
+            <p>
+                ✅ In Stock
+            </p>
+
+
+            <form
+                method="POST"
+                action="/add-to-cart"
+            >
+
+                <input
+                    type="hidden"
+                    name="product_id"
+                    value="{{ product.id }}"
+                >
+
+                <button type="submit">
+
+                    Add to Cart
+
+                </button>
+
+            </form>
+
+
+        {% else %}
+
+            <p>
+                ❌ Out of Stock
+            </p>
+
+            <button disabled>
+
+                Add to Cart
+
+            </button>
+
+        {% endif %}
+
+
+    {% else %}
+
+        <h2>
+            Product not found
+        </h2>
+
+    {% endif %}
+
+
+    <br>
+
+    <a href="/">
+
+        ← Back to Products
+
+    </a>
+
+
+</body>
+
+</html>
