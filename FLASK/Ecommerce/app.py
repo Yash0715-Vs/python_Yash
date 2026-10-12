@@ -1,204 +1,203 @@
+
 from flask import Flask, render_template, request, redirect, flash
 from database import get_connection
+from decimal import Decimal
 import pymysql
 
-
 app = Flask(__name__)
-
-# Required for flash messages
 app.secret_key = "mysecretkey"
 
 
-# =========================================================
-# HOME PAGE + PRODUCT SEARCH
-# =========================================================
-
+# HOME PAGE + SEARCH
 @app.route("/")
 def home():
 
-    # Get search text from URL
-    search = request.args.get("search", "")
+    search_text = request.args.get("search", "")
+    search = search_text.lower().replace("-", "").replace(" ", "")
 
-    # Convert search text to lowercase
-    # Remove spaces and hyphens
-    search = search.lower().replace("-", "").replace(" ", "")
-
-    # Connect to MySQL
     connection = get_connection()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Use dictionary cursor
-    cursor = connection.cursor(
-        pymysql.cursors.DictCursor
-    )
-
-    # If user searched something
-    if search:
-
-        cursor.execute(
-            """
-            SELECT *
-            FROM products
-            WHERE REPLACE(
-                    REPLACE(
-                        LOWER(name),
-                        '-',
-                        ''
-                    ),
+    try:
+        if search:
+            cursor.execute(
+                """
+                SELECT *
+                FROM products
+                WHERE REPLACE(
+                    REPLACE(LOWER(name), '-', ''),
                     ' ',
                     ''
-                  ) LIKE %s
-            """,
-            ("%" + search + "%",)
-        )
+                ) LIKE %s
+                """,
+                ("%" + search + "%",)
+            )
+        else:
+            cursor.execute("SELECT * FROM products")
 
-    # If no search
-    else:
+        products = cursor.fetchall()
 
-        cursor.execute(
-            "SELECT * FROM products"
-        )
+    finally:
+        cursor.close()
+        connection.close()
 
-    # Get all products
-    products = cursor.fetchall()
-
-    # Close connection
-    cursor.close()
-    connection.close()
-
-    # Send products to HTML
     return render_template(
         "home.html",
         products=products,
-        search=search
+        search=search_text
     )
 
 
-# =========================================================
 # PRODUCT DETAILS
-# =========================================================
-
 @app.route("/product/<int:product_id>")
 def product_details(product_id):
 
-    # Connect to MySQL
     connection = get_connection()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Dictionary cursor
-    cursor = connection.cursor(
-        pymysql.cursors.DictCursor
-    )
+    try:
+        cursor.execute(
+            "SELECT * FROM products WHERE id = %s",
+            (product_id,)
+        )
+        product = cursor.fetchone()
 
-    # Get product using ID
-    cursor.execute(
-        """
-        SELECT *
-        FROM products
-        WHERE id = %s
-        """,
-        (product_id,)
-    )
+    finally:
+        cursor.close()
+        connection.close()
 
-    # Get one product
-    product = cursor.fetchone()
-
-    # Close connection
-    cursor.close()
-    connection.close()
-
-    # Send product to HTML
     return render_template(
         "product_details.html",
         product=product
     )
 
 
-# =========================================================
 # ADD TO CART
-# =========================================================
-
 @app.route("/add-to-cart", methods=["POST"])
 def add_to_cart():
 
-    # Get product ID from HTML form
-    product_id = request.form.get("product_id")
+    product_id = request.form.get("product_id", type=int)
 
-    # Connect to MySQL
+    if product_id is None:
+        flash("Invalid product ID.", "error")
+        return redirect("/")
+
     connection = get_connection()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    # Dictionary cursor
-    cursor = connection.cursor(
-        pymysql.cursors.DictCursor
-    )
+    try:
+        cursor.execute(
+            "SELECT * FROM products WHERE id = %s",
+            (product_id,)
+        )
+        product = cursor.fetchone()
 
-    # Get product information
-    cursor.execute(
-        """
-        SELECT *
-        FROM products
-        WHERE id = %s
-        """,
-        (product_id,)
-    )
+        if not product:
+            flash("Product not found.", "error")
 
-    product = cursor.fetchone()
-
-    # Check if product exists
-    if product:
-
-        # Check stock
-        if product["stock"] > 0:
-
-            # Insert product into cart
-            cursor.execute(
-                """
-                INSERT INTO cart
-                (product_id, product_name, quantity)
-                VALUES (%s, %s, %s)
-                """,
-                (
-                    product["id"],
-                    product["name"],
-                    1
-                )
-            )
-
-            # Save changes
-            connection.commit()
-
-            # Show success message
-            flash(
-                product["name"] + " added to cart!",
-                "success"
-            )
+        elif product["stock"] <= 0:
+            flash(product["name"] + " is out of stock.", "error")
 
         else:
-
-            # Product is out of stock
-            flash(
-                product["name"] + " is out of stock.",
-                "error"
+            cursor.execute(
+                """
+                INSERT INTO cart (product_id, product_name, quantity)
+                VALUES (%s, %s, %s)
+                """,
+                (product["id"], product["name"], 1)
             )
 
-    else:
+            connection.commit()
+            flash(product["name"] + " added to cart!", "success")
 
-        # Product doesn't exist
-        flash(
-            "Product not found.",
-            "error"
-        )
+    except Exception:
+        connection.rollback()
+        flash("Could not add the product to cart.", "error")
 
-    # Close connection
-    cursor.close()
-    connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
-    # Go back to home page
     return redirect("/")
 
 
-# =========================================================
-# RUN FLASK
-# =========================================================
+# CART PAGE
+@app.route("/cart")
+def cart():
 
+    connection = get_connection()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+    try:
+        cursor.execute(
+            """
+            SELECT
+                cart.id AS cart_id,
+                cart.product_id,
+                cart.product_name,
+                cart.quantity,
+                products.price
+            FROM cart
+            JOIN products ON cart.product_id = products.id
+            ORDER BY cart.id DESC
+            """
+        )
+
+        cart_items = cursor.fetchall()
+        total = Decimal("0.00")
+
+        for item in cart_items:
+            item["subtotal"] = item["price"] * item["quantity"]
+            total += item["subtotal"]
+
+    finally:
+        cursor.close()
+        connection.close()
+
+    return render_template(
+        "cart.html",
+        cart_items=cart_items,
+        total=total
+    )
+
+
+# REMOVE ITEM FROM CART
+@app.route("/remove-from-cart", methods=["POST"])
+def remove_from_cart():
+
+    cart_id = request.form.get("cart_id", type=int)
+
+    if cart_id is None:
+        flash("Invalid cart item.", "error")
+        return redirect("/cart")
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    try:
+        # Delete only the selected cart record
+        cursor.execute(
+            "DELETE FROM cart WHERE id = %s",
+            (cart_id,)
+        )
+
+        if cursor.rowcount > 0:
+            connection.commit()
+            flash("Item removed from cart.", "success")
+        else:
+            flash("Cart item not found.", "error")
+
+    except Exception:
+        connection.rollback()
+        flash("Could not remove the item.", "error")
+
+    finally:
+        cursor.close()
+        connection.close()
+
+    return redirect("/cart")
+
+
+# RUN APPLICATION
 if __name__ == "__main__":
-
     app.run(debug=True)

@@ -1,166 +1,84 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <title>Mini E-Commerce</title>
-
 </head>
-
 
 <body>
 
     <h1>Mini E-Commerce Store</h1>
 
+    <a href="/cart">🛒 View Cart</a>
 
-    <!-- ========================================= -->
-    <!-- FLASH MESSAGE -->
-    <!-- ========================================= -->
+    <hr>
 
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
-
-        {% if messages %}
-
-            {% for category, message in messages %}
-
-                <p>
-                    ✅ {{ message }}
-                </p>
-
-            {% endfor %}
-
-        {% endif %}
-
+        {% for category, message in messages %}
+            <p>
+                {% if category == "success" %}✅{% else %}❌{% endif %}
+                {{ message }}
+            </p>
+        {% endfor %}
     {% endwith %}
 
-
-    <!-- ========================================= -->
-    <!-- SEARCH FORM -->
-    <!-- ========================================= -->
-
+    <!-- Search -->
     <form method="GET" action="/">
-
         <input
             type="text"
             name="search"
             placeholder="Search products..."
             value="{{ search }}"
         >
-
-        <button type="submit">
-            Search
-        </button>
-
+        <button type="submit">Search</button>
     </form>
-
 
     <br>
 
-
-    <!-- ========================================= -->
-    <!-- PRODUCTS -->
-    <!-- ========================================= -->
-
+    <!-- Product List -->
     {% for product in products %}
 
         <div>
+            <h2>{{ product.name }}</h2>
 
-            <h2>
-                {{ product.name }}
-            </h2>
-
-            <p>
-                {{ product.description }}
-            </p>
-
-            <p>
-                Price: ₹{{ product.price }}
-            </p>
-
-            <p>
-                Category: {{ product.category }}
-            </p>
-
-            <p>
-                Stock: {{ product.stock }}
-            </p>
-
-
-            <!-- STOCK CHECK -->
+            <p>{{ product.description }}</p>
+            <p>Price: ₹{{ product.price }}</p>
+            <p>Category: {{ product.category }}</p>
+            <p>Stock: {{ product.stock }}</p>
 
             {% if product.stock > 0 %}
 
-                <p>
-                    ✅ In Stock
-                </p>
+                <p>✅ In Stock</p>
 
-
-                <!-- ADD TO CART -->
-
-                <form
-                    method="POST"
-                    action="/add-to-cart"
-                >
-
+                <form method="POST" action="/add-to-cart">
                     <input
                         type="hidden"
                         name="product_id"
                         value="{{ product.id }}"
                     >
-
-                    <button type="submit">
-
-                        Add to Cart
-
-                    </button>
-
+                    <button type="submit">Add to Cart</button>
                 </form>
-
 
             {% else %}
 
-                <p>
-                    ❌ Out of Stock
-                </p>
-
-                <button disabled>
-
-                    Add to Cart
-
-                </button>
+                <p>❌ Out of Stock</p>
+                <button disabled>Add to Cart</button>
 
             {% endif %}
 
-
-            <br>
-
-
-            <!-- PRODUCT DETAILS -->
-
-            <a href="/product/{{ product.id }}">
-
-                View Details
-
-            </a>
-
+            <p>
+                <a href="/product/{{ product.id }}">View Details</a>
+            </p>
         </div>
 
         <hr>
 
     {% endfor %}
 
-
-    <!-- NO PRODUCTS -->
-
     {% if not products %}
-
-        <p>
-            No products found.
-        </p>
-
+        <p>No products found.</p>
     {% endif %}
 
-
 </body>
-
 </html>
