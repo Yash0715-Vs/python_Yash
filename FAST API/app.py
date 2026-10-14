@@ -42,14 +42,55 @@
 
 
 
+# from fastapi import FastAPI
+
+# app = FastAPI()
+
+
+# @app.get("/products")
+# def get_product(name: str, price: int = 0):
+#     return {
+#         "name": name,
+#         "price": price
+#     }
+
+
+# from fastapi import FastAPI
+
+# app = FastAPI()
+
+
+# @app.get("/students")
+# def get_student(
+#     name: str,
+#     age: int,
+#     course: str = "Python"
+# ):
+#     return {
+#         "name": name,
+#         "age": age,
+#         "course": course
+#     }
+
+
+
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
 
-@app.get("/products")
-def get_product(name: str, price: int = 0):
+# Define the expected request data
+class product(BaseModel):
+    name: str
+    price: float
+    quantity: int
+
+
+# Create a student
+@app.post("/product")
+def create_product(product: product):
     return {
-        "name": name,
-        "price": price
+        "message": "product recive successfully",
+        "product": product
     }
